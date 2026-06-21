@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>SGB</title>
+
+<style>
+body{
+  font-family: Arial;
+  margin:0;
+  background:#f4f4f4;
+}
+
+
+.pantalla{
+  display:none;
+  padding:20px;
+}
+
+.activa{
+  display:block;
+}
+
+
+header{
+  background:#7b1e3a;
+  color:white;
+  padding:15px;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+}
+
+
+.grid{
+  display:grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap:15px;
+  padding:20px;
+}
+
+.card{
+  background:white;
+  padding:20px;
+  text-align:center;
+  border-radius:10px;
+  cursor:pointer;
+  font-weight:bold;
+}
+
+.card:hover{
+  background:#7b1e3a;
+  color:white;
+}
+
+
+button{
+  padding:10px 15px;
+  background:#7b1e3a;
+  color:white;
+  border:none;
+  cursor:pointer;
+  margin-top:10px;
+}
+
+.modal{
+  display:none;
+  position:fixed;
+  top:0;
+  left:0;
+  width:100%;
+  height:100%;
+  background:rgba(0,0,0,0.5);
+  justify-content:center;
+  align-items:center;
+}
+
+.modal-box{
+  background:white;
+  padding:20px;
+  border-radius:10px;
+  text-align:center;
+}
+
+.modal-box button{
+  margin:10px;
+}
+</style>
+</head>
+
+<body>
+<div id="inicio" class="pantalla activa">
+
+  <div style="text-align:center; padding:40px;">
+
+    <h1>Página principal</h1>
+
+    <h2>Sistema de Gestión de Bodega</h2>
+
+    <p style="max-width:600px; margin:auto;">
+      Bienvenido al sistema de gestión de bodegas.<br><br>
+      Esta plataforma permite administrar productos, lotes de producción,
+      stock, ventas y tareas diarias de la bodega.
+    </p>
+
+    <br>
+
+    <button onclick="mostrar('login')">Iniciar sesión</button>
+
+  </div>
+
+</div>
+
+<div id="login" class="pantalla">
+  <h2>Login</h2>
+  <input id="user" placeholder="Usuario">
+  <input id="pass" placeholder="Contraseña">
+  <button onclick="login()">Entrar</button>
+</div>
+
+
+<div id="panel" class="pantalla">
+
+<header>
+  <h2>SGB - Panel del Sistema</h2>
+  <button onclick="abrirModal()">Cerrar sesión</button>
+</header>
+
+<div class="grid">
+
+<div class="card" onclick="mostrar('productos')">🍇 Gestión de Productos</div>
+<div class="card" onclick="mostrar('lotes')">🛢️ Lotes de Producción</div>
+<div class="card" onclick="mostrar('produccion')">🍷 Producción</div>
+<div class="card" onclick="mostrar('stock')">📦 Stock</div>
+<div class="card" onclick="mostrar('ventas')">💰 Ventas</div>
+<div class="card" onclick="mostrar('tareas')">📅 Tareas Diarias</div>
+<div class="card" onclick="mostrar('vinedos')">🌿 Viñedos</div>
+<div class="card" onclick="mostrar('recepcion')">🚚 Recepción de Uvas</div>
+<div class="card" onclick="mostrar('empleados')">👷 Empleados</div>
+<div class="card" onclick="mostrar('reportes')">📈 Reportes</div>
+
+</div>
+
+</div>
+
+
+<div id="productos" class="pantalla"><h2>Productos</h2><button onclick="volver()">Volver</button></div>
+<div id="lotes" class="pantalla"><h2>Lotes</h2><button onclick="volver()">Volver</button></div>
+<div id="produccion" class="pantalla"><h2>Producción</h2><button onclick="volver()">Volver</button></div>
+<div id="stock" class="pantalla"><h2>Stock</h2><button onclick="volver()">Volver</button></div>
+<div id="ventas" class="pantalla"><h2>Ventas</h2><button onclick="volver()">Volver</button></div>
+<div id="tareas" class="pantalla"><h2>Tareas Diarias</h2><button onclick="volver()">Volver</button></div>
+<div id="vinedos" class="pantalla"><h2>Viñedos</h2><button onclick="volver()">Volver</button></div>
+<div id="recepcion" class="pantalla"><h2>Recepción de Uvas</h2><button onclick="volver()">Volver</button></div>
+<div id="empleados" class="pantalla"><h2>Empleados</h2><button onclick="volver()">Volver</button></div>
+<div id="reportes" class="pantalla"><h2>Reportes</h2><button onclick="volver()">Volver</button></div>
+
+<div id="modal" class="modal">
+  <div class="modal-box">
+    <h3>¿Desea cerrar sesión?</h3>
+    <button onclick="cerrarSesion()">Cerrar sesión</button>
+    <button onclick="cerrarModal()">Cancelar</button>
+  </div>
+</div>
+
+<script>
+
+function mostrar(id){
+  document.querySelectorAll(".pantalla").forEach(p => p.classList.remove("activa"));
+  document.getElementById(id).classList.add("activa");
+}
+
+function login(){
+  let u = document.getElementById("user").value;
+  let p = document.getElementById("pass").value;
+
+  if(u !== "" && p !== ""){
+    mostrar("panel");
+  } else {
+    alert("Complete los campos");
+  }
+}
+
+function volver(){
+  document.querySelectorAll(".pantalla").forEach(p => p.classList.remove("activa"));
+  document.getElementById("panel").classList.add("activa");
+}
+function abrirModal(){
+  document.getElementById("modal").style.display = "flex";
+}
+
+function cerrarModal(){
+  document.getElementById("modal").style.display = "none";
+}
+
+function cerrarSesion(){
+  document.getElementById("modal").style.display = "none";
+  document.querySelectorAll(".pantalla").forEach(p => p.classList.remove("activa"));
+  document.getElementById("login").classList.add("activa");
+}
+
+</script>
+
+</body>
+</html>
